@@ -10,6 +10,7 @@ require (
 	github.com/dustin/go-humanize v1.0.0
 	github.com/fasthttp/router v1.4.4
 	github.com/fatih/color v1.12.0 // indirect
+	github.com/golang/groupcache v0.0.0-20200121045136-8c9f03a8e57e // indirect
 	github.com/kpango/glg v1.6.4
 	github.com/kyokomi/emoji/v2 v2.2.8
 	github.com/manifoldco/promptui v0.9.0

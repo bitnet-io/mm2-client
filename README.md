@@ -1,3 +1,24 @@
+
+
+
+
+# install go . build and run
+
+```
+sh install-go.sh
+sh build.sh
+sh run_prices.sh
+
+
+point your browser at
+
+http://127.0.0.1:13579/api/v2/tickers?expire_at=259200
+
+
+```
+
+
+
 # mm2-client
 my own mm2 client / tooling
 
@@ -231,7 +252,7 @@ WantedBy=multi-user.target
 Set script to run daily via root's cronjob to update coins file and restart service
 ```
 #!/bin/bash
-curl https://raw.githubusercontent.com/KomodoPlatform/coins/master/utils/coins_config.json -o /home/admin/mm2-client/coins_config.json
+curl https://raw.githubusercontent.com/bitnet-io/coins/master/utils/coins_config.json -o /home/admin/mm2-client/coins_config.json
 go build -o /home/admin/mm2-client/prices_komodo_earth /home/admin/mm2-client/cmd/mm2_tools_server/mm2_tools_server.go
 systemctl restart prices-komodo-earth
 ```

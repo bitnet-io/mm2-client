@@ -88,7 +88,7 @@ func RetrieveCEXRatesFromPair(base string, rel string) (string, bool, string, st
 func RetrieveVolume24h(coin string) (string, string, string) {
 	volume, date, provider := CoingeckoGetTotalVolume(coin)
 	if volume == "0" {
-		volume, date, provider = CoinpaprikaTotalVolume(coin)
+//		volume, date, provider = CoinpaprikaTotalVolume(coin)
 	}
 	if volume == "0" {
 		volume, date, provider = LcwGetTotalVolume(coin)
@@ -119,7 +119,7 @@ func RetrievePercentChange24h(coin string) (string, string, string) {
 	}
 
 	if change24h == "0" {
-		change24h, date, provider = CoinpaprikaGetChange24h(coin)
+//		change24h, date, provider = CoinpaprikaGetChange24h(coin)
 	}
 
 	if change24h == "0" {
