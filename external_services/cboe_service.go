@@ -16,24 +16,28 @@ import (
 
 
 
-//	"io"
 
 //	"strconv"
 
 )
 
 
-
-
+func toGlobalQuote(buf []byte) (*GlobalQuote, error) {
+	globalQuoteResponse := &GlobalQuoteResponse{}
+	if err := json.Unmarshal(buf, globalQuoteResponse); err != nil {
+		return nil, err
+	}
+	return &globalQuoteResponse.GlobalQuote, nil
+}
 
 
 // GlobalQuoteResponse - encapsulates global quote repsonse
 type GlobalQuoteResponse struct {
-	CBOEAnswer CBOEAnswer `json:"Global Quote"`
+	GlobalQuote GlobalQuote `json:"Global Quote"`
 }
 
 // GlobalQuote - encapsulates global quote
-type CBOEAnswer struct {
+type GlobalQuote struct {
 	Id           string  `json:"01. symbol"`
 	Open             float64 `json:"02. open,string"`
 	High             float64 `json:"03. high,string"`
@@ -77,13 +81,9 @@ func NewCBOERequest(page int) string {
 
 
 
-
-
-
 //func processCoingecko() *[]CoingeckoAnswer {
-func processCBOE() *[]CBOEAnswer {
-	var answers = &[]CBOEAnswer{}
-
+func processCBOE() *[]GlobalQuoteResponse {
+	var answers = &[]GlobalQuoteResponse{}
 
 
 
@@ -97,18 +97,16 @@ func processCBOE() *[]CBOEAnswer {
 		}
 		if resp.StatusCode == http.StatusOK {
 			defer resp.Body.Close()
-		var page_answer = &[]CBOEAnswer{}
+		var page_answer = &[]GlobalQuoteResponse{}
 			decodeErr := json.NewDecoder(resp.Body).Decode(page_answer)
 			if decodeErr != nil {
 				fmt.Printf("decodeErr: %v\n", decodeErr)
 			}
-			//fmt.Printf("Got %v coins form CBOE\n", len(*page_answer))
+			fmt.Printf("Got %v coins form CBOE\n", len(*page_answer))
 			*answers = append(*answers, *page_answer...)
-//			if len(*page_answer) == 0 || len(*page_answer) < 250 {
+			//			if len(*page_answer) == 0 || len(*page_answer) < 250 {
 			return answers
-
-
-//			}
+				//			}
 		} else {
 			bodyBytes, _ := ioutil.ReadAll(resp.Body)
 			glg.Errorf("Http status not OK: %s", bodyBytes)
@@ -136,7 +134,7 @@ func StartCBOEService() {
 		if resp := processCBOE(); resp != nil {
 			glg.Info("CBOE request successfully processed")
 			for _, cur := range *resp {
-				CBOEPriceRegistry.Store(cur.Id, cur)
+				CBOEPriceRegistry.Store(cur.GlobalQuote.Id, cur)
 			}
 		} else {
 			glg.Error("Something went wrong when processing cboe request")
@@ -158,7 +156,7 @@ func CBOEUSDValIfSupported(coin string) (string, string, string) {
 	if cfg, cfgOk := config.GCFGRegistry[coin]; cfgOk {
 		val, ok := CoingeckoPriceRegistry.Load(cfg.CBOEID)
 		if ok {
-			resp := val.(CBOEAnswer)
+			resp := val.(GlobalQuote)
 			valStr = fmt.Sprintf("%f", resp.CurrentPrice)
 			dateStr = resp.LastUpdated
 		}
@@ -192,7 +190,7 @@ func CBOEVolume(coin string) (string, string, string) {
 	if cfg, cfgOk := config.GCFGRegistry[coin]; cfgOk {
 		val, ok := CoingeckoPriceRegistry.Load(cfg.CBOEID)
 		if ok {
-			resp := val.(CBOEAnswer)
+			resp := val.(GlobalQuote)
 			totalVolumeStr = fmt.Sprintf("%f", resp.TotalVolume)
 			dateStr = resp.LastUpdated
 		}
