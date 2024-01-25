@@ -310,6 +310,8 @@ github.com/sirupsen/logrus v1.8.1 h1:dJKuHgqk1NNQlqoA6BTlM1Wf9DOH3NBjQyu0h9+AZZE
 github.com/sirupsen/logrus v1.8.1/go.mod h1:yWOB1SBYBC5VeMP7gHvWumXLIWorT60ONWic61uBYv0=
 github.com/skip2/go-qrcode v0.0.0-20190110000554-dc11ecdae0a9/go.mod h1:PLPIyL7ikehBD1OAjmKKiOEhbvWyHGaNDjquXMcYABo=
 github.com/skip2/go-qrcode v0.0.0-20200617195104-da1b6568686e/go.mod h1:XV66xRDqSt+GTGFMVlhk3ULuV0y9ZmzeVGR4mloJI3M=
+github.com/sklinkert/alphavantage v0.0.0-20230514083112-21fff73b423c h1:qz3knE1N2nqOIQ1xL0x8+k6Ut1szAixdDhyKpN50drc=
+github.com/sklinkert/alphavantage v0.0.0-20230514083112-21fff73b423c/go.mod h1:3VuR3uD/K5W1RYop7CMPz7j3j+Zjv7n1EFadmkKwyX0=
 github.com/slack-go/slack v0.9.4/go.mod h1:wWL//kk0ho+FcQXcBTmEafUI5dz4qz5f4mMk8oIkioQ=
 github.com/soniah/evaler v2.2.0+incompatible h1:0VEcg1WW0PD4eS7JHVSObNw7KYrtNNdtbwKmXpn0+UM=
 github.com/soniah/evaler v2.2.0+incompatible/go.mod h1:OTUTRAJQ39oGv6H40xxaG6rr1Yi3TT1w5Z3qg9EgLKE=

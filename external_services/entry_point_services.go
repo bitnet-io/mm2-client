@@ -16,7 +16,9 @@ func LaunchPriceServices() {
 	go StartForexService()
 	glg.Info("Starting coingecko price service")
 	go StartCoingeckoService()
-	glg.Info("Starting coinpaprika price service")
+	glg.Info("Starting coingecko price service")
+	go StartCBOEService()
+	glg.Info("Starting cboe price service")
 	go StartCoinpaprikaService()
 	if constants.GLcwApiKey != "" {
 		glg.Info("Start LiveCoinWatch service")

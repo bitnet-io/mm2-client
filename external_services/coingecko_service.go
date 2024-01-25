@@ -63,7 +63,7 @@ func NewCoingeckoRequest(page int) string {
 	all_coins := getGeckoCoinsList()
 	url += strings.Join(all_coins, ",")
 	url += "&order=id_asc&price_change_percentage=24h&sparkline=true&per_page=250"
-	url += "&page=" + fmt.Sprintf("%d", page)
+//	url += "&page=" + fmt.Sprintf("%d", page)
 	return url
 }
 

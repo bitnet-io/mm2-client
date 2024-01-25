@@ -17,6 +17,8 @@ require (
 	github.com/nikoksr/notify v0.17.3
 	github.com/olekukonko/tablewriter v0.0.5
 	github.com/schollz/progressbar/v3 v3.8.3
+	github.com/sirupsen/logrus v1.8.1 // indirect
+	github.com/sklinkert/alphavantage v0.0.0-20230514083112-21fff73b423c // indirect
 	github.com/soniah/evaler v2.2.0+incompatible
 	github.com/stretchr/testify v1.7.0
 	github.com/tyler-smith/go-bip39 v1.1.0
