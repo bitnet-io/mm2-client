@@ -11,6 +11,11 @@ import (
 	"sync"
 	"time"
 
+	"sort"
+//	"strings"
+
+//	"os"
+
 	"github.com/kpango/glg"
 )
 
@@ -52,6 +57,18 @@ const gPaprikaEndpoint = "https://api.coinpaprika.com/v1/tickers"
 
 var CoinpaprikaRegistry sync.Map
 
+
+func NewPaprikaRequest(page int) string {
+        url := gPaprikaEndpoint
+  //      all_coins := getPaprikaCoinsList()
+    //    url += strings.Join(all_coins, ",")
+//        url += "&x_cg_api_key=CG-8XDVCpAhU2YLcD3EGAU4bzCJ"
+//      url += "&order=id_asc&price_change_percentage=24h&sparkline=true&per_page=250"
+//      url += "&page=" + fmt.Sprintf("%d", page)
+        return url
+}
+
+
 func processCoinpaprika() *[]CoinpaprikaAnswer {
 	url := gPaprikaEndpoint
 	glg.Infof("Processing coinpaprika request: %s", url)
@@ -59,6 +76,62 @@ func processCoinpaprika() *[]CoinpaprikaAnswer {
 	if err != nil {
 		return nil
 	}
+
+
+
+/*
+
+
+                if resp.StatusCode == http.StatusOK {
+                        defer resp.Body.Close()
+//                      var page_answer = &[]CoingeckoAnswer{}
+
+                             var resulta CoinpaprikaAnswer
+                       bodyBytes, _ := ioutil.ReadAll(resp.Body)
+
+//                      decodeErr := json.NewDecoder(resp.Body).Decode(page_answer)
+//                      if decodeErr != nil {
+//                              fmt.Printf("decodeErr: %v\n", decodeErr)
+//                      }
+//                      fmt.Printf("Got %v coins form Gecko\n", len(*page_answer))
+//                       *answer = append(*answer, *page_answer...)
+//
+//                      if len(*page_answer) == 0 || len(*page_answer) < 250 {
+//                              return answer
+//                      }
+
+                      decodeErr2 := json.Unmarshal(bodyBytes, &resulta)
+
+                        if decodeErr2 != nil {
+                                fmt.Printf("decodeErr2: %v\n", decodeErr2)
+                        }
+                        fmt.Printf("Got %+v coins from paprika\n", resulta)
+
+
+
+ rankingsJson, _ := json.Marshal(resulta)
+    err = ioutil.WriteFile("./stocks/crypto.json", rankingsJson, 0644)
+    fmt.Printf("%+v", resulta)
+
+
+        //Open our jsonFile
+    jsonFile, err := os.Open("./stocks/crypto.json")
+    // if we os.Open returns an error then handle it
+    if err != nil {
+        fmt.Println(err)
+    }
+
+    fmt.Println("Successfully Opened crypto.json")
+    // defer the closing of our jsonFile so that we can parse it later on
+    defer jsonFile.Close()
+*/
+
+
+
+
+
+
+
 	if resp.StatusCode == http.StatusOK {
 		defer resp.Body.Close()
 		var answer = &[]CoinpaprikaAnswer{}
@@ -67,7 +140,9 @@ func processCoinpaprika() *[]CoinpaprikaAnswer {
 			fmt.Printf("Err: %v\n", decodeErr)
 			return nil
 		}
-		return answer
+
+		return nil
+
 	} else {
 		bodyBytes, _ := ioutil.ReadAll(resp.Body)
 		glg.Errorf("Http status not OK: %s", bodyBytes)
@@ -98,7 +173,7 @@ func StartCoinpaprikaService() {
 				functorVerification(cur.Symbol+"-QRC20", cur)
 			}
 		} else {
-			glg.Error("Something went wrong when processing coinpaprika request")
+//			glg.Error("Something went wrong when processing coinpaprika request")
 		}
 		time.Sleep(constants.GPricesLoopTime)
 	}
@@ -159,4 +234,16 @@ func CoinpaprikaGetChange24h(coin string) (string, string, string) {
 		return changePercent24h, dateStr, "coinpaprika"
 	}
 	return changePercent24h, dateStr, "unknown"
+}
+
+func getPaprikaCoinsList() []string {
+	coins := []string{}
+	for _, cur := range config.GCFGRegistry {
+		if cur.CoinpaprikaID != "test-coin" && cur.CoinpaprikaID != "" {
+			coins = append(coins, cur.CoinpaprikaID)
+		}
+	}
+	coins = helpers.UniqueStrings(coins)
+	sort.Strings(coins)
+	return coins
 }

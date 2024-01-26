@@ -9,6 +9,7 @@ import (
 )
 
 type CoingeckoHistoryResponse struct {
+/*
 	ID     string `json:"id"`
 	Symbol string `json:"symbol"`
 	Name   string `json:"name"`
@@ -233,6 +234,7 @@ type CoingeckoHistoryResponse struct {
 		AlexaRank   int         `json:"alexa_rank"`
 		BingMatches interface{} `json:"bing_matches"`
 	} `json:"public_interest_stats"`
+*/
 }
 
 var GeckoPriceAtDateRegistry sync.Map
@@ -262,8 +264,8 @@ func HandleGeckoPrice(timestamp int64, geckoId string) {
 		if decodeErr != nil {
 			return
 		}
-		key := geckoId + "-" + TimestampToGeckoDate(timestamp)
-		GeckoPriceAtDateRegistry.Store(key, fmt.Sprintf("%.2f", answer.MarketData.CurrentPrice.Usd))
+//		key := geckoId + "-" + TimestampToGeckoDate(timestamp)
+//		GeckoPriceAtDateRegistry.Store(key, fmt.Sprintf("%.2f", answer.MarketData.CurrentPrice.Usd))
 	} else if resp.StatusCode == http.StatusTooManyRequests {
 		fmt.Println("Too many request, waiting 1sec and retrying")
 		time.Sleep(1 * time.Second)
@@ -286,3 +288,4 @@ func GetFromRegistry(timestamp int64, geckoId string) string {
 	}
 	return "0"
 }
+

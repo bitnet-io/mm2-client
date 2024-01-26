@@ -1,0 +1,16 @@
+{
+  "ticker": "BIT",
+  "usdValue": "0.000506752196",
+  "quoteResponse": {
+    "result": [
+      {
+        "regularMarketPrice": 11.34,
+        "symbol": "F"
+      },
+      {
+        "regularMarketPrice": 190.43,
+        "symbol": "IBM"
+      }
+    ]
+  }
+}

@@ -54,7 +54,7 @@ type BinanceExchangeInfos struct {
 	} `json:"symbols"`
 }
 
-const BinanceEndpoint = "https://api.binance.com/api/v3/exchangeInfo"
+const BinanceEndpoint = "https://api.binance.us/api/v3/exchangeInfo"
 
 func GetBinanceExchangeInfos() (*BinanceExchangeInfos, error) {
 	resp, err := http.Get(BinanceEndpoint)

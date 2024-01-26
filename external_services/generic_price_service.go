@@ -25,9 +25,15 @@ func RetrieveUSDValIfSupported(coin string, expirePriceValidity int) (string, st
 		elapsed = helpers.DateToTimeElapsed(date)
 	}
 
-	//! Gecko
+	//! Gecko might need this
 	if val == "0" || (expirePriceValidity > 0 && elapsed > expirePriceValidityF) {
 		val, date, provider = CoingeckoRetrieveUSDValIfSupported(coin)
+		elapsed = helpers.DateToTimeElapsed(date)
+	}
+
+	//! CBOE
+	if val == "0" || (expirePriceValidity > 0 && elapsed > expirePriceValidityF) {
+		val, date, provider = CBOEUSDValIfSupported(coin)
 		elapsed = helpers.DateToTimeElapsed(date)
 	}
 
@@ -69,8 +75,13 @@ func RetrieveCEXRatesFromPair(base string, rel string) (string, bool, string, st
 
 	//! Gecko
 	if val == "0" {
-		val, calculated, date, provider = CoingeckoRetrieveCEXRatesFromPair(base, rel)
+//		val, calculated, date, provider = CoingeckoRetrieveCEXRatesFromPair(base, rel)
 	}
+
+	//! CBOE
+//	if val == "0" {
+//		val, calculated, date, provider = CBOERetrieveCEXRatesFromPair(base, rel)
+//	}
 
 	//! Paprika
 	if val == "0" {
@@ -86,13 +97,18 @@ func RetrieveCEXRatesFromPair(base string, rel string) (string, bool, string, st
 }
 
 func RetrieveVolume24h(coin string) (string, string, string) {
-	volume, date, provider := CoingeckoGetTotalVolume(coin)
+//	volume, date, provider := CoingeckoGetTotalVolume(coin)
+//	volume, date, provider := CBOEVolume(coin)
+	volume, date, provider := LcwGetTotalVolume(coin)
 	if volume == "0" {
-//		volume, date, provider = CoinpaprikaTotalVolume(coin)
+		volume, date, provider = CoinpaprikaTotalVolume(coin)
 	}
 	if volume == "0" {
 		volume, date, provider = LcwGetTotalVolume(coin)
 	}
+//	if volume == "0" {
+//		volume, date, provider = CBOEVolume(coin)
+//	}
 	if volume != "0" {
 		return volume, date, provider
 	} else {
@@ -100,13 +116,13 @@ func RetrieveVolume24h(coin string) (string, string, string) {
 	}
 }
 
-func RetrieveSparkline7D(coin string) (*[]float64, string, string) {
-	sparklineData, date, provider := CoingeckoGetSparkline7D(coin)
-	if sparklineData == nil {
-		return sparklineData, date, "unknown"
-	}
-	return sparklineData, date, provider
-}
+//func RetrieveSparkline7D(coin string) (*[]float64, string, string) {
+//	sparklineData, date, provider := CoingeckoGetSparkline7D(coin)
+//	if sparklineData == nil {
+//		return sparklineData, date, "unknown"
+//	}
+//	return sparklineData, date, provider
+//}
 
 func RetrievePercentChange24h(coin string) (string, string, string) {
 	_, date, change24h, provider := BinanceRetrieveUSDValIfSupported(coin)
@@ -115,11 +131,11 @@ func RetrievePercentChange24h(coin string) (string, string, string) {
 	}
 
 	if change24h == "0" {
-		change24h, date, provider = CoingeckoGetChange24h(coin)
+//		change24h, date, provider = CoingeckoGetChange24h(coin)
 	}
 
 	if change24h == "0" {
-//		change24h, date, provider = CoinpaprikaGetChange24h(coin)
+		change24h, date, provider = CoinpaprikaGetChange24h(coin)
 	}
 
 	if change24h == "0" {

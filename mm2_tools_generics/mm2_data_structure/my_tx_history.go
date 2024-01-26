@@ -13,6 +13,9 @@ import (
 	"sync"
 )
 
+
+
+
 type MyTxHistoryAnswer struct {
 	Result struct {
 		Skipped      int         `json:"skipped"`
@@ -55,7 +58,7 @@ type MyTxHistoryRequest struct {
 	Method   string `json:"method"`
 	Coin     string `json:"coin"`
 	Limit    int    `json:"limit"`
-	//FromId     string `json:"from_id,omitempty"`
+	FromId     string `json:"from_id,omitempty"`
 	PageNumber int  `json:"page_number,omitempty"`
 	Max        bool `json:"max,omitempty"`
 }
@@ -92,7 +95,7 @@ func (answer *MyTxHistoryAnswer) ToTable(coinReq string, page int, tx int, withO
 				if !common.ExistInGeckoRegistry(curAnswer.Timestamp, cfg.CoingeckoID) {
 					key := cfg.CoingeckoID + "-" + common.TimestampToGeckoDate(curAnswer.Timestamp)
 					if _, ok := visited[key]; !ok {
-						//fmt.Printf("key %s don't exist processing\n", key)
+						fmt.Printf("key %s don't exist processing\n", key)
 						wg.Add(1)
 						go functor(curAnswer.Timestamp, cfg.CoingeckoID, &wg)
 						visited[key] = true
@@ -102,6 +105,7 @@ func (answer *MyTxHistoryAnswer) ToTable(coinReq string, page int, tx int, withO
 		}
 		wg.Wait()
 	}
+
 
 	for _, curAnswer := range answer.Result.Transactions {
 		if curAnswer.Coin != "" {
@@ -142,7 +146,7 @@ func (answer *MyTxHistoryAnswer) ToTable(coinReq string, page int, tx int, withO
 
 	table := tablewriter.NewWriter(os.Stdout)
 	if !custom && !max {
-		table.SetFooter([]string{"", "", "Current Page", strconv.Itoa(page), "Nb Pages", strconv.Itoa(answer.Result.TotalPages)}) // Add Footer
+		table.SetFooter([]string{"", "", "Current Page", strconv.Itoa(page), "Nb Pages", strconv.Itoa(answer.Result.TotalPages)})  //Add Footer
 	}
 	table.SetAutoWrapText(false)
 	table.SetHeader([]string{"From", "To", "Balance Change", "Fee", "Date", "TxUrl"})
@@ -151,3 +155,5 @@ func (answer *MyTxHistoryAnswer) ToTable(coinReq string, page int, tx int, withO
 	table.AppendBulk(data) // Add Bulk Data
 	table.Render()
 }
+
+
