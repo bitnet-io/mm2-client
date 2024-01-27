@@ -1,0 +1,14 @@
+{
+  "quoteResponse": {
+    "result": [
+      {
+        "last_price": 11.39,
+        "symbol": "F"
+      },
+      {
+        "last_price": 187.42,
+        "symbol": "IBM"
+      }
+    ]
+  }
+}

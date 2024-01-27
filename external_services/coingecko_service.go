@@ -166,7 +166,7 @@ type CoingeckoAnswer struct {
 
 type CoingeckoAnswer struct {
 	Ticker                  string `json:"ticker"`
-	UsdValue                string `json:"usdValue"`
+	UsdValue                string `json:"lastPrice"`
 }
 
 
@@ -177,7 +177,13 @@ type CoingeckoAnswer struct {
 
 //const gCoingeckoEndpoint = "https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids="
 //const gCoingeckoEndpoint = "https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids="
-const gCoingeckoEndpoint = "https://api.xeggex.com/api/v2/asset/getbyticker/"
+//const gCoingeckoEndpoint = "https://api.xeggex.com/api/v2/asset/getbyticker/"
+
+
+
+const gCoingeckoEndpoint = "https://api.xeggex.com/api/v2/market/getbysymbol/"
+
+
 var CoingeckoPriceRegistry sync.Map
 
 func NewCoingeckoRequest(page int) string {
@@ -264,7 +270,7 @@ var answer = &[]CoingeckoAnswer{}
 			return answer
 		}
 		page += 1
-		time.Sleep(600 * time.Second) 
+		time.Sleep(60 * time.Second) 
 	}
 
 

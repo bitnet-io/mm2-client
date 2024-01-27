@@ -1,7 +1,7 @@
 {
     "BITN": {
         "ticker": "BITN",
-  "lastPrice": "0.000568528",
+        "ticker": "BITN",
         "last_updated": "2024-01-27T15:54:15.190Z",
         "last_updated_timestamp": 1706370855,
         "volume24h": "127281.000000",
@@ -14,7 +14,7 @@
     },
     "FORD": {
         "ticker": "FORD",
-        "last_price": "11.39",
+
         "last_updated": "2024-01-27T15:54:15.190Z",
         "last_updated_timestamp": 1706370855,
         "volume24h": "127281.000000",
@@ -27,7 +27,7 @@
     },
     "IBM": {
         "ticker": "IBM",
-        "last_price": "187.42",
+
         "last_updated": "2024-01-27T15:54:15.190Z",
         "last_updated_timestamp": 1706370855,
         "volume24h": "127281.000000",
@@ -38,5 +38,8 @@
         "change_24h": "20.770923",
         "change_24h_provider": "coingecko"
     }
+}
+
+   }
 }
 

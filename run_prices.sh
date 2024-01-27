@@ -17,14 +17,21 @@ sleep 5
 
 ./server-stock &
 
+
 while :
 do
-find ./stocks -type f  -exec sed -i s/ticker/symbol/g {} +
-find ./stocks -type f  -exec sed -i s/regularMarketPrice/usdValue/g {} +
-jq -s '.[0] * .[1]' stocks/crypto.json stocks/stocks.json > stocks/market.json
-find ./stocks -type f  -exec sed -i s/ticker/symbol/g {} +
-find ./stocks -type f  -exec sed -i s/regularMarketPrice/usdValue/g {} +
-sleep 60s
+find ./stocks/stocks.json -type f  -exec sed -i s/regularMarketPrice/last_price/g {} +
+find ./stocks/crypto.json -type f  -exec sed -i s/lastPrice/last_price/g {} +
+
+cat ./stocks/stocks.json | jq . > ./stocks/stock.json
+cp -rf ./stocks/stock.json ./stocks/stocks.json
+
+cat ./stocks/crypto.json | jq . > ./stocks/cryptos.json
+cp ./stocks/cryptos.json ./stocks/crypto.json
+jq -s '.[0] * .[1]' stocks/crypto.json stocks/stocks.json > stocks/markets.json
+#find ./stocks -type f  -exec sed -i s/BIT/BITN/g {} +
+#find ./stocks -type f  -exec sed -i s/F/FORD/g {} +
+sleep 10s
 
 
 echo '
@@ -37,3 +44,5 @@ updating the market api
 '
 done
 
+#find ./stocks -type f  -exec sed -i s/ticker/symbol/g {} +
+#find ./stocks -type f  -exec sed -i s/ticker/symbol/g {} +

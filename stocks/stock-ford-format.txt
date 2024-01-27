@@ -1,0 +1,7 @@
+ sed -n '5p' stocks.json > stock1.txt
+ find stock1.txt -type f  -exec sed -i s/','/'",'/g {} +
+ find stock1.txt -type f  -exec sed -i s/': '/': "'/g {} +
+sed -n '9p' stocks.json > stock2.txt
+ find stock2.txt -type f  -exec sed -i s/','/'",'/g {} +
+ find stock2.txt -type f  -exec sed -i s/': '/': "'/g {} +
+

@@ -1,3 +1,4 @@
+
 package external_services
 
 import (
@@ -209,7 +210,7 @@ func processCBOE() *[]CBOEAnswer {
 			return answer
 		}
 		page += 1
-		time.Sleep(600 * time.Second) 
+		time.Sleep(60 * time.Second) 
 	}
 
 

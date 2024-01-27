@@ -1,7 +1,7 @@
 {
     "BITN": {
         "ticker": "BITN",
-  "lastPrice": "0.000568528",
+        "last_price": "0.000603",
         "last_updated": "2024-01-27T15:54:15.190Z",
         "last_updated_timestamp": 1706370855,
         "volume24h": "127281.000000",
