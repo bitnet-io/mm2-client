@@ -4,7 +4,7 @@
 echo 'point your browser at
 
 this should be null because the data is merged into port 1717 for market
-http://127.0.0.1:13579/api/v2/tickers?expire_at=259200
+http://127.0.0.1:13579/api/v2/symbols?expire_at=259200
 
 http://127.0.0.1:1717/market.json
 
@@ -33,3 +33,9 @@ updating the market api
 '
 done
 
+while :
+do
+find ./stocks -type f  -exec sed -i s/ticker/symbol/g {} +
+find ./stocks -type f  -exec sed -i s/regularMarketPrice/usdValue/g {} +
+sleep 1s
+done
