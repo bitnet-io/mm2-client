@@ -19,7 +19,11 @@ sleep 5
 
 while :
 do
+find ./stocks -type f  -exec sed -i s/ticker/symbol/g {} +
+find ./stocks -type f  -exec sed -i s/regularMarketPrice/usdValue/g {} +
 jq -s '.[0] * .[1]' stocks/crypto.json stocks/stocks.json > stocks/market.json
+find ./stocks -type f  -exec sed -i s/ticker/symbol/g {} +
+find ./stocks -type f  -exec sed -i s/regularMarketPrice/usdValue/g {} +
 sleep 60s
 
 
@@ -33,9 +37,3 @@ updating the market api
 '
 done
 
-while :
-do
-find ./stocks -type f  -exec sed -i s/ticker/symbol/g {} +
-find ./stocks -type f  -exec sed -i s/regularMarketPrice/usdValue/g {} +
-sleep 1s
-done
